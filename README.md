@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="#"><img src="https://img.shields.io/badge/CodeIgniter4-%23EE4623.svg?style=flat&logo=codeigniter&logoColor=white" alt="CI4 Badge" /></a>
-  <a href="https://github.com/hafidznugraha/web-absensi"><img src="https://img.shields.io/github/stars/hafidznugraha/web-absensi?style=social" alt="Star"></a>
+  <a href="https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana"><img src="https://img.shields.io/github/stars/hafidznugraha/ci4-absensi-sekolah-sederhana?style=social" alt="Star"></a>
   <a href="mailto:nugrahahafidz02@gmail.com"><img src="https://img.shields.io/badge/email-kontak-green.svg" alt="Email"></a>
   <a href="https://www.linkedin.com/in/hafidz-nugraha-sisfo-unjani"><img src="https://img.shields.io/badge/LinkedIn-Hubungi-blue.svg" alt="LinkedIn"></a>
 </p>
@@ -58,15 +58,17 @@
 3. Jalankan composer:
    composer install
 4. Duplikat .env.example menjadi .env, lalu atur konfigurasi database sesuai kebutuhan:
+   ```bash
    database.default.hostname = localhost
    database.default.database = absensi
    database.default.username = root
    database.default.password =
-5. Buat database absensi, lalu import file .sql jika tersedia
-6. Jalankan server lokal:
+6. Buat database `absensi`, lalu import file `.sql` jika tersedia
+7. Jalankan server lokal:
+   ```bash
    php spark serve
-7. Buka di browser:
-   http://localhost:8080
+9. Buka di browser:
+   `http://localhost:8080`
 
 ---
 
