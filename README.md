@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/hafidznugraha/hafidznugraha/public/assets/img/codeigniter.png" alt="CodeIgniter 4" width="120">
+  <img src="https://raw.githubusercontent.com/hafidznugraha/ci4-absensi-sekolah-sederhana/52e1b338130c99eaa90527c0ff3a207726dbf955/public/assets/img/codeigniter.png" alt="CodeIgniter 4" width="120">
   <br>
   Sistem Absensi Sekolah
   <br>
