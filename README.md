@@ -56,8 +56,9 @@
    git clone https://github.com/hafidznugraha/web-absensi.git
    cd web-absensi
 3. Jalankan composer:
+   ```bash
    composer install
-4. Duplikat .env.example menjadi .env, lalu atur konfigurasi database sesuai kebutuhan:
+5. Duplikat .env.example menjadi .env, lalu atur konfigurasi database sesuai kebutuhan:
    ```bash
    database.default.hostname = localhost
    database.default.database = absensi
