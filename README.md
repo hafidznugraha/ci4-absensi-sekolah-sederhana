@@ -61,17 +61,17 @@
 3. Jalankan composer:
    ```bash
    composer install
-5. Duplikat .env.example menjadi .env, lalu atur konfigurasi database sesuai kebutuhan:
+4. Duplikat `.env.example` menjadi `.env`, lalu atur konfigurasi database sesuai kebutuhan:
    ```bash
    database.default.hostname = localhost
    database.default.database = absensi
    database.default.username = root
    database.default.password =
-6. Buat database `absensi`, lalu import file `.sql` jika tersedia
-7. Jalankan server lokal:
+5. Buat database `absensi`, lalu import file `.sql` jika tersedia
+6. Jalankan server lokal:
    ```bash
    php spark serve
-9. Buka di browser:
+7. Buka di browser:
    `http://localhost:8080`
 
 ---
