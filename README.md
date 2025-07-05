@@ -50,52 +50,57 @@
    - PHP 8.x
    - Composer
    - XAMPP / MySQL / MariaDB
+
 2. Clone repository ini:
    ```bash
    git clone https://github.com/hafidznugraha/web-absensi.git
    cd web-absensi
-3. Jalankan composer:
-   composer install
-4. Duplikat .env.example menjadi .env, lalu atur database sesuai config lokal kamu:
-   database.default.hostname = localhost
-   database.default.database = absensi
-   database.default.username = root
-   database.default.password =
-5. Buat database absensi, lalu import file .sql jika tersedia
-6. Jalankan server lokal:
-   php spark serve
-7. Buka di browser:
-8. http://localhost:8080
+Instalasi:
+Jalankan composer:
 
-## ⚙️ Teknologi
+bash
+Salin
+Edit
+composer install
+Duplikat .env.example menjadi .env, lalu atur konfigurasi database sesuai kebutuhan:
 
-| Bahasa / Framework | Keterangan                       |
-| ------------------ | -------------------------------- |
-| PHP                | Bahasa backend utama             |
-| CodeIgniter 4      | Framework utama                  |
-| MySQL              | Database                         |
-| Bootstrap 5        | UI Framework                     |
-| JavaScript/jQuery  | Interaktifitas                   |
-| VS Code            | Code editor                      |
-| Git & GitHub       | Version control                  |
-| Kali Linux         | OS alternatif untuk pengembangan |
+pgsql
+Salin
+Edit
+database.default.hostname = localhost
+database.default.database = absensi
+database.default.username = root
+database.default.password =
+Buat database absensi, lalu import file .sql jika tersedia
 
-## 🤝 Kontribusi
-Proyek ini dibuat secara mandiri untuk pengembangan skill backend dan CI4.
-Jika kamu tertarik untuk mempelajari atau memberikan feedback, silakan fork dan open issue ✨
+Jalankan server lokal:
 
-## 📄 Lisensi
-Proyek ini menggunakan lisensi MIT — bebas digunakan, dipelajari, dan dimodifikasi.
+bash
+Salin
+Edit
+php spark serve
+Buka di browser:
+
+arduino
+Salin
+Edit
+http://localhost:8080
+⚙️ Teknologi
+Bahasa / Framework	Keterangan
+PHP	Bahasa backend utama
+CodeIgniter 4	Framework MVC
+MySQL	Database relasional
+Bootstrap 5	Framework UI responsif
+JavaScript/jQuery	Fitur interaktif pada antarmuka
+VS Code	Code editor
+Git & GitHub	Version control
+Kali Linux	OS alternatif untuk develop/test
+
+🤝 Kontribusi
+Proyek ini dibuat secara mandiri untuk pengembangan diri dalam dunia backend dan web development.
+Jika kamu tertarik memberikan feedback atau belajar dari proyek ini, silakan fork atau open issue ya!
+
+📄 Lisensi
+Proyek ini menggunakan lisensi MIT — bebas digunakan, dimodifikasi, dan dibagikan.
 
 Dibuat dengan ❤️ oleh Hafidz Nugraha
-
----
-
-## 🔧 Langkah Selanjutnya:
-- Simpan file ini dengan nama `README.md` di root folder proyek kamu
-- Lalu commit & push:
-
-```bash
-git add README.md
-git commit -m "Tambah README dengan format profesional"
-git push origin main
