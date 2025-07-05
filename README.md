@@ -83,7 +83,7 @@ Silakan import file tersebut ke phpMyAdmin atau DBMS lain untuk menjalankan proy
 
 ---
 
-⚙️ Teknologi
+## ⚙️ Teknologi
 | Bahasa / Framework | Keterangan                       |
 | ------------------ | -------------------------------- |
 | PHP                | Bahasa backend utama             |
