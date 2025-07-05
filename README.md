@@ -53,7 +53,9 @@
 
 2. Clone repository ini:
    ```bash
-   git clone https://github.com/hafidznugraha/web-absensi.git
+   git clone https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana.git
+   ```
+   ```bash
    cd web-absensi
 3. Jalankan composer:
    ```bash
