@@ -73,6 +73,13 @@
    php spark serve
 7. Buka di browser:
    `http://localhost:8080`
+---
+
+## 🗂️ File Database
+
+File SQL tersedia di folder `app/Database/absensi.sql`.
+
+Silakan import file tersebut ke phpMyAdmin atau DBMS lain untuk menjalankan proyek ini.
 
 ---
 
