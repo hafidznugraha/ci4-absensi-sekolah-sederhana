@@ -56,7 +56,7 @@
    git clone https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana.git
    ```
    ```bash
-   cd web-absensi
+   cd ci4-absensi-sekolah-sederhana
 3. Jalankan composer:
    ```bash
    composer install
