@@ -83,7 +83,7 @@ Silakan import file tersebut ke phpMyAdmin atau DBMS lain untuk menjalankan proy
 
 ---
 
-## ⚙️ Teknologi
+⚙️ Teknologi
 | Bahasa / Framework | Keterangan                       |
 | ------------------ | -------------------------------- |
 | PHP                | Bahasa backend utama             |
@@ -108,4 +108,4 @@ Proyek ini menggunakan lisensi MIT — bebas digunakan, dimodifikasi, dan dibagi
 
 ---
 
-Dibuat dengan ❤️ oleh Hafidz Nugraha
+<p align="center">Dibuat dengan ❤️ oleh Hafidz Nugraha</p>
