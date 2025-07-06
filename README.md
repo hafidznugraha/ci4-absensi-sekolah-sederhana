@@ -17,10 +17,10 @@
 
 <p align="center">
   <a href="https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana?tab=readme-ov-file#-fitur-utama">Fitur Utama</a> •
-  <a href="#cara-menjalankan">Cara Menjalankan</a> •
-  <a href="#teknologi">Teknologi</a> •
-  <a href="#kontribusi">Kontribusi</a> •
-  <a href="#lisensi">Lisensi</a>
+  <a href="https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana?tab=readme-ov-file#%EF%B8%8F-cara-menjalankan">Cara Menjalankan</a> •
+  <a href="https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana?tab=readme-ov-file#%EF%B8%8F-teknologi">Teknologi</a> •
+  <a href="https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana?tab=readme-ov-file#-kontribusi">Kontribusi</a> •
+  <a href="https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana?tab=readme-ov-file#-lisensi">Lisensi</a>
 </p>
 
 ---
