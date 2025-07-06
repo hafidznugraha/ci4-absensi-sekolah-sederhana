@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <a href="#fitur-utama">Fitur Utama</a> •
+  <a href="https://github.com/hafidznugraha/ci4-absensi-sekolah-sederhana?tab=readme-ov-file#-fitur-utama">Fitur Utama</a> •
   <a href="#cara-menjalankan">Cara Menjalankan</a> •
   <a href="#teknologi">Teknologi</a> •
   <a href="#kontribusi">Kontribusi</a> •
