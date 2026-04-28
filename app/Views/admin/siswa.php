@@ -73,8 +73,8 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand bg-white border-bottom shadow-sm 
-              d-none d-md-flex position-fixed top-0 start-0 end-0 px-4 py-2"
+    <?php $siswa = $siswa ?? []; ?>
+    <nav class="navbar navbar-expand bg-white border-bottom shadow-sm d-none d-md-flex position-fixed top-0 start-0 end-0 px-4 py-2"
         style="z-index: 1030;">
         <div class="container-fluid d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center gap-2">
