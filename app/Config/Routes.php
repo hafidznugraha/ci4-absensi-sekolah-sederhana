@@ -1,46 +1,80 @@
 <?php
-// Auth
-$routes->get('/login', 'Auth::login');
-$routes->post('/auth/process', 'Auth::process');
+
+namespace Config;
+
+$routes = Services::routes();
+
+// =====================================
+// ROOT / DEFAULT
+// =====================================
+$routes->get('/', 'Auth::login');
+
+
+// =====================================
+// AUTH
+// =====================================
+$routes->get('login', 'Auth::login');
+$routes->post('auth/process', 'Auth::process');
 $routes->get('logout', 'Auth::logout');
 $routes->get('auth/logout', 'Auth::logout');
 
-// Admin
-$routes->get('admin/dashboard', 'Admin::dashboard');
-$routes->get('/admin', 'Admin::index');
-$routes->get('/admin/siswa', 'Admin::siswa');
-$routes->post('admin/siswa/tambah', 'Admin::tambahSiswa');
-$routes->post('admin/siswa/update', 'Admin::updateSiswa');
-$routes->get('admin/siswa/hapus/(:num)', 'Admin::hapusSiswa/$1');
-$routes->get('admin/guru', 'Admin::guru');
-$routes->post('admin/guru/tambah', 'Admin::tambahGuru');
-$routes->post('admin/guru/update', 'Admin::updateGuru');
-$routes->get('admin/guru/hapus/(:num)', 'Admin::hapusGuru/$1');
-$routes->get('admin/jadwal', 'Admin::jadwal');
-$routes->post('admin/jadwal/tambah', 'Admin::tambahJadwal');
-$routes->post('admin/jadwal/update', 'Admin::updateJadwal');
-$routes->get('admin/jadwal/hapus/(:num)', 'Admin::hapusJadwal/$1');
-$routes->get('admin/siswa/rekap-pdf', 'Admin::rekapSiswaPdf');
-$routes->get('admin/guru/rekap-pdf', 'Admin::rekapGuruPdf');
-$routes->get('/admin/jadwal', 'Admin::jadwal');
 
-// Guru
-$routes->group('guru', ['filter' => 'roleGuru'], function ($r) {
-    $r->get('/',             'Guru::index');
-    $r->get('beranda',       'Guru::beranda');
-    $r->get('rekap',         'Guru::rekap');
-    $r->get('konfirmasi/(:num)', 'Guru::konfirmasi/$1');
-    $r->get('profil',        'Guru::profil');
-    $r->post('profil/update', 'Guru::updateProfil');
+// =====================================
+// ADMIN
+// =====================================
+$routes->group('admin', function ($routes) {
+
+    $routes->get('/', 'Admin::index');
+    $routes->get('dashboard', 'Admin::dashboard');
+
+    // Siswa
+    $routes->get('siswa', 'Admin::siswa');
+    $routes->post('siswa/tambah', 'Admin::tambahSiswa');
+    $routes->post('siswa/update', 'Admin::updateSiswa');
+    $routes->get('siswa/hapus/(:num)', 'Admin::hapusSiswa/$1');
+    $routes->get('siswa/rekap-pdf', 'Admin::rekapSiswaPdf');
+
+    // Guru
+    $routes->get('guru', 'Admin::guru');
+    $routes->post('guru/tambah', 'Admin::tambahGuru');
+    $routes->post('guru/update', 'Admin::updateGuru');
+    $routes->get('guru/hapus/(:num)', 'Admin::hapusGuru/$1');
+    $routes->get('guru/rekap-pdf', 'Admin::rekapGuruPdf');
+
+    // Jadwal
+    $routes->get('jadwal', 'Admin::jadwal');
+    $routes->post('jadwal/tambah', 'Admin::tambahJadwal');
+    $routes->post('jadwal/update', 'Admin::updateJadwal');
+    $routes->get('jadwal/hapus/(:num)', 'Admin::hapusJadwal/$1');
 });
 
-// Siswa
+
+// =====================================
+// GURU
+// =====================================
+$routes->group('guru', ['filter' => 'roleGuru'], function ($routes) {
+
+    $routes->get('/', 'Guru::index');
+    $routes->get('beranda', 'Guru::beranda');
+    $routes->get('rekap', 'Guru::rekap');
+    $routes->get('konfirmasi/(:num)', 'Guru::konfirmasi/$1');
+
+    $routes->get('profil', 'Guru::profil');
+    $routes->post('profil/update', 'Guru::updateProfil');
+});
+
+
+// =====================================
+// SISWA
+// =====================================
 $routes->group('siswa', ['filter' => 'roleSiswa'], function ($routes) {
-    $routes->get('', 'Siswa::index');
-    $routes->get('beranda',        'Siswa::beranda');
-    $routes->get('absen',          'Siswa::absen');
-    $routes->post('submit',        'Siswa::submitAbsen');
-    $routes->get('riwayat',        'Siswa::riwayat');
-    $routes->get('profil',         'Siswa::profil');
+
+    $routes->get('/', 'Siswa::index');
+    $routes->get('beranda', 'Siswa::beranda');
+    $routes->get('absen', 'Siswa::absen');
+    $routes->post('submit', 'Siswa::submitAbsen');
+    $routes->get('riwayat', 'Siswa::riwayat');
+
+    $routes->get('profil', 'Siswa::profil');
     $routes->post('profil/update', 'Siswa::updateProfil');
 });
