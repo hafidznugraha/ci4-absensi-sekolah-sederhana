@@ -246,14 +246,38 @@ class Admin extends BaseController
 
         $jadwalModel = new JadwalModel();
 
+        $hari        = $this->request->getPost('hari');
+        $mapel       = $this->request->getPost('mapel');
+        $jamMulai    = $this->request->getPost('jam_mulai');
+        $jamSelesai  = $this->request->getPost('jam_selesai');
+
+        // VALIDASI: jam selesai harus lebih besar
+        if ($jamSelesai <= $jamMulai) {
+            return redirect()->back()->with('error', 'Jam selesai harus lebih besar dari jam mulai.');
+        }
+
+        // VALIDASI: bentrok jadwal
+        $bentrok = $jadwalModel
+            ->where('hari', $hari)
+            ->groupStart()
+            ->where("'$jamMulai' < jam_selesai")
+            ->where("'$jamSelesai' > jam_mulai")
+            ->groupEnd()
+            ->first();
+
+        if ($bentrok) {
+            return redirect()->back()->with('error', 'Jadwal bentrok dengan jadwal lain di hari yang sama.');
+        }
+
         $data = [
-            'hari'        => $this->request->getPost('hari'),
-            'mapel'       => $this->request->getPost('mapel'),
-            'jam_mulai'   => $this->request->getPost('jam_mulai'),
-            'jam_selesai' => $this->request->getPost('jam_selesai'),
+            'hari'        => $hari,
+            'mapel'       => $mapel,
+            'jam_mulai'   => $jamMulai,
+            'jam_selesai' => $jamSelesai,
         ];
 
         $jadwalModel->insert($data);
+
         return redirect()->to(base_url('admin/jadwal'));
     }
 
@@ -263,16 +287,41 @@ class Admin extends BaseController
         if ($redirect) return $redirect;
 
         $jadwalModel = new JadwalModel();
-        $id = $this->request->getPost('id');
+
+        $id          = $this->request->getPost('id');
+        $hari        = $this->request->getPost('hari');
+        $mapel       = $this->request->getPost('mapel');
+        $jamMulai    = $this->request->getPost('jam_mulai');
+        $jamSelesai  = $this->request->getPost('jam_selesai');
+
+        // VALIDASI: jam selesai harus lebih besar
+        if ($jamSelesai <= $jamMulai) {
+            return redirect()->back()->with('error', 'Jam selesai harus lebih besar dari jam mulai.');
+        }
+
+        // VALIDASI: bentrok (exclude dirinya sendiri)
+        $bentrok = $jadwalModel
+            ->where('hari', $hari)
+            ->where('id !=', $id)
+            ->groupStart()
+            ->where("'$jamMulai' < jam_selesai")
+            ->where("'$jamSelesai' > jam_mulai")
+            ->groupEnd()
+            ->first();
+
+        if ($bentrok) {
+            return redirect()->back()->with('error', 'Jadwal bentrok dengan jadwal lain di hari yang sama.');
+        }
 
         $data = [
-            'hari'        => $this->request->getPost('hari'),
-            'mapel'       => $this->request->getPost('mapel'),
-            'jam_mulai'   => $this->request->getPost('jam_mulai'),
-            'jam_selesai' => $this->request->getPost('jam_selesai'),
+            'hari'        => $hari,
+            'mapel'       => $mapel,
+            'jam_mulai'   => $jamMulai,
+            'jam_selesai' => $jamSelesai,
         ];
 
         $jadwalModel->update($id, $data);
+
         return redirect()->to(base_url('admin/jadwal'));
     }
 

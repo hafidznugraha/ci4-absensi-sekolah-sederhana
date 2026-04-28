@@ -111,6 +111,11 @@
             </div>
         </div>
         <div class="card">
+            <?php if (session()->getFlashdata('error')): ?>
+                <div class="alert alert-danger">
+                    <?= session()->getFlashdata('error') ?>
+                </div>
+            <?php endif; ?>
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
                     <thead>
