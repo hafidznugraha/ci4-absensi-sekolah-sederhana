@@ -1,0 +1,28 @@
+CRITICAL - 2026-04-28 19:03:51 --> ErrorException: Undefined array key "nama"
+[Method: GET, Route: siswa/profil]
+in APPPATH\Views\siswa\profil.php on line 109.
+ 1 APPPATH\Views\siswa\profil.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "nama"', 'C:\\xampp\\htdocs\\ci4-absensi-sekolah-sederhana\\app\\Views\\siswa\\profil.php', 109)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\ci4-absensi-sekolah-sederhana\\app\\Views\\siswa\\profil.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('siswa/profil', [], true)
+ 5 APPPATH\Controllers\Siswa.php(221): view('siswa/profil', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Siswa->profil()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Siswa))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2026-04-28 19:03:56 --> ErrorException: Undefined array key "nama"
+[Method: GET, Route: siswa/profil]
+in APPPATH\Views\siswa\profil.php on line 109.
+ 1 APPPATH\Views\siswa\profil.php(109): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "nama"', 'C:\\xampp\\htdocs\\ci4-absensi-sekolah-sederhana\\app\\Views\\siswa\\profil.php', 109)
+ 2 SYSTEMPATH\View\View.php(224): include('C:\\xampp\\htdocs\\ci4-absensi-sekolah-sederhana\\app\\Views\\siswa\\profil.php')
+ 3 SYSTEMPATH\View\View.php(227): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1173): CodeIgniter\View\View->render('siswa/profil', [], true)
+ 5 APPPATH\Controllers\Siswa.php(221): view('siswa/profil', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Siswa->profil()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Siswa))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(334): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

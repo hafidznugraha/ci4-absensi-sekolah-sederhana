@@ -166,14 +166,6 @@
                         </span>
                     </div>
                 </div>
-                <div class="mb-3">
-                    <label for="role" class="form-label">Login Sebagai:</label>
-                    <select class="form-select" name="role" required>
-                        <option value="siswa">Siswa</option>
-                        <option value="guru">Guru</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
                 <button type="submit" class="btn btn-primary w-100">Masuk</button>
             </form>
         </div>

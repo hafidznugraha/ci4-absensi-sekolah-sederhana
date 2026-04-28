@@ -14,47 +14,65 @@ class Auth extends BaseController
     public function process()
     {
         $session = session();
-        $model   = new \App\Models\UserModel();
+        $model   = new UserModel();
 
-        $email    = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
-        $role     = $this->request->getPost('role');
+        $email    = trim($this->request->getPost('email'));
+        $password = trim($this->request->getPost('password'));
 
+        // Cari user berdasarkan email dan password
         $user = $model->where('email', $email)
             ->where('password', $password)
-            ->where('role', strtolower($role))
             ->first();
 
+        // Jika user tidak ditemukan
         if (!$user) {
-            $userCheck = $model->where('email', $email)
-                ->where('password', $password)
-                ->first();
+            return redirect()->back()->with('error', 'Email atau password salah!');
+        }
 
-            if ($userCheck) {
-                return redirect()->back()->with('error', 'Role login salah. Pilih "Admin" untuk akun admin.');
-            } else {
-                return redirect()->back()->with('error', 'Email atau password salah!');
+        /*
+        |--------------------------------------------------------------------------
+        | AUTO DETEKSI ROLE
+        |--------------------------------------------------------------------------
+        | Prioritas utama ambil dari kolom role di database.
+        | Jika kosong, fallback deteksi dari domain email.
+        */
+        $role = strtolower($user['role'] ?? '');
+
+        if (empty($role)) {
+            if (str_contains($email, '@admin.com')) {
+                $role = 'admin';
+            } elseif (str_contains($email, '@guru.com')) {
+                $role = 'guru';
+            } elseif (str_contains($email, '@sekolah.com')) {
+                $role = 'siswa';
             }
         }
 
+        // Jika role tetap kosong / tidak dikenali
+        if (!in_array($role, ['admin', 'guru', 'siswa'])) {
+            return redirect()->back()->with('error', 'Role akun tidak valid!');
+        }
+
+        // Simpan session
         $session->set([
             'logged_in' => true,
             'user_id'   => $user['id'],
             'nama'      => $user['nama'],
-            'role'      => $user['role'],
+            'role'      => $role,
             'nis'       => $user['nis'] ?? null,
             'email'     => $user['email'],
         ]);
 
-        if ($user['role'] === 'admin') {
+        // Redirect sesuai role
+        if ($role === 'admin') {
             return redirect()->to('/admin/dashboard');
-        } elseif ($user['role'] === 'guru') {
+        } elseif ($role === 'guru') {
             return redirect()->to('/guru');
-        } elseif ($user['role'] === 'siswa') {
+        } elseif ($role === 'siswa') {
             return redirect()->to('/siswa');
-        } else {
-            return redirect()->back()->with('error', 'Role tidak valid!');
         }
+
+        return redirect()->back()->with('error', 'Terjadi kesalahan login!');
     }
 
     public function logout()
