@@ -142,13 +142,14 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#modalEdit"
                                         onclick="editSiswa(
-                          '<?= $row['id'] ?>',
-                          '<?= esc($row['nama'], 'attr') ?>',
-                          '<?= esc($row['nis'], 'attr') ?>',
-                          '<?= esc($row['email'], 'attr') ?>'
-                        )">
+            '<?= $row['id'] ?>',
+            '<?= esc($row['nama'], 'attr') ?>',
+            '<?= esc($row['nis'], 'attr') ?>',
+            '<?= explode('@', $row['email'])[0] ?>'
+        )">
                                         Edit
                                     </button>
+
                                     <a href="<?= base_url('admin/siswa/hapus/' . $row['id']) ?>"
                                         class="btn btn-sm btn-danger"
                                         onclick="return confirm('Hapus siswa ini?')">
@@ -216,7 +217,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" id="edit-email" class="form-control" required>
+                        <div class="input-group">
+                            <input type="text" name="email_prefix" id="edit-email" class="form-control" required>
+                            <span class="input-group-text">@sekolah.com</span>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password <small class="text-muted">(kosongkan jika tidak ganti)</small></label>
@@ -256,11 +260,11 @@
     </nav>
 
     <script>
-        function editSiswa(id, nama, nis, email) {
+        function editSiswa(id, nama, nis, emailPrefix) {
             document.getElementById('edit-id').value = id;
             document.getElementById('edit-nama').value = nama;
             document.getElementById('edit-nis').value = nis;
-            document.getElementById('edit-email').value = email;
+            document.getElementById('edit-email').value = emailPrefix;
             document.getElementById('edit-password').value = '';
         }
     </script>

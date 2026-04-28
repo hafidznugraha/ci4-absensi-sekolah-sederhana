@@ -112,13 +112,17 @@ class Admin extends BaseController
         if ($redirect) return $redirect;
 
         $id = $this->request->getPost('id');
+
+        $emailPrefix = trim($this->request->getPost('email_prefix'));
+
         $data = [
             'nama'  => $this->request->getPost('nama'),
             'nis'   => $this->request->getPost('nis'),
-            'email' => $this->request->getPost('email'),
+            'email' => $emailPrefix . '@sekolah.com',
         ];
 
         $password = $this->request->getPost('password');
+
         if (!empty($password)) {
             $data['password'] = $password;
         }
