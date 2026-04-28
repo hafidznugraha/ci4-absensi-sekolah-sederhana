@@ -221,7 +221,21 @@ class Admin extends BaseController
         if ($redirect) return $redirect;
 
         $jadwalModel = new JadwalModel();
-        $data['jadwal'] = $jadwalModel->findAll();
+
+        $data['jadwal'] = $jadwalModel
+            ->orderBy("
+            CASE
+                WHEN hari = 'Senin' THEN 1
+                WHEN hari = 'Selasa' THEN 2
+                WHEN hari = 'Rabu' THEN 3
+                WHEN hari = 'Kamis' THEN 4
+                WHEN hari = 'Jumat' THEN 5
+                ELSE 99
+            END
+        ", '', false)
+            ->orderBy('jam_mulai', 'ASC')
+            ->findAll();
+
         return view('admin/jadwal', $data);
     }
 
