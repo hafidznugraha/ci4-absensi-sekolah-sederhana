@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Rekap Data Siswa</title>
+    <title>Rekap Jadwal</title>
 
     <style>
         body {
@@ -36,28 +36,28 @@
 
 <body>
 
-    <h3>Rekap Data Siswa</h3>
+    <h3>Rekap Jadwal Pelajaran</h3>
 
     <table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama</th>
-                <th>NIS</th>
-                <th>Email</th>
-                <th>Kata Sandi</th>
+                <th>Hari</th>
+                <th>Mapel</th>
+                <th>Jam Mulai</th>
+                <th>Jam Selesai</th>
             </tr>
         </thead>
 
         <tbody>
             <?php $no = 1;
-            foreach ($siswa as $row): ?>
+            foreach ($jadwal as $j): ?>
                 <tr>
                     <td><?= $no++ ?></td>
-                    <td><?= esc($row['nama']) ?></td>
-                    <td><?= esc($row['nis']) ?></td>
-                    <td><?= esc($row['email']) ?></td>
-                    <td><?= esc($row['password']) ?></td>
+                    <td><?= esc($j['hari']) ?></td>
+                    <td><?= esc($j['mapel']) ?></td>
+                    <td><?= esc($j['jam_mulai']) ?></td>
+                    <td><?= esc($j['jam_selesai']) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -105,9 +105,17 @@
         <div class="d-md-flex justify-content-between align-items-center mb-3">
             <h4 class="mb-2 mb-md-0">Data Jadwal</h4>
             <div class="btn-group-mobile mt-2 mt-md-0">
+
+                <a href="<?= base_url('admin/jadwal/rekap-pdf') ?>"
+                    target="_blank"
+                    class="btn btn-outline-danger">
+                    <i class="bi bi-file-earmark-pdf"></i> Rekap PDF
+                </a>
+
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
                     <i class="bi bi-plus-lg"></i> Tambah Jadwal
                 </button>
+
             </div>
         </div>
         <div class="card">

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\JadwalModel;
 use App\Models\UserModel;
+use Dompdf\Dompdf;
 
 class Admin extends BaseController
 {
@@ -13,6 +14,20 @@ class Admin extends BaseController
             return redirect()->to(base_url('login'))->send();
             exit;
         }
+    }
+
+    protected function generatePdf($view, $data, $filename = 'file.pdf', $orientation = 'portrait')
+    {
+        $dompdf = new Dompdf();
+
+        $html = view($view, $data);
+
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', $orientation);
+        $dompdf->render();
+
+        $dompdf->stream($filename, ['Attachment' => false]);
+        exit();
     }
 
     public function index()
@@ -28,7 +43,7 @@ class Admin extends BaseController
         $redirect = $this->cekLoginAdmin();
         if ($redirect) return $redirect;
 
-        $userModel = new UserModel();
+        $userModel   = new UserModel();
         $jadwalModel = new JadwalModel();
 
         $data = [
@@ -47,42 +62,30 @@ class Admin extends BaseController
         if ($redirect) return $redirect;
 
         $userModel = new UserModel();
-        $data['siswa'] = $userModel->where('role', 'siswa')->findAll();
+
+        $data['siswa'] = $userModel
+            ->where('role', 'siswa')
+            ->findAll();
 
         return view('admin/siswa', $data);
     }
 
     public function rekapSiswaPdf()
     {
-        $userModel = new \App\Models\UserModel();
-        $siswa = $userModel->where('role', 'siswa')->findAll();
+        $redirect = $this->cekLoginAdmin();
+        if ($redirect) return $redirect;
 
-        $html = view('admin/rekap_siswa_pdf', ['siswa' => $siswa]);
+        $userModel = new UserModel();
 
-        $dompdf = new \Dompdf\Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
+        $data['siswa'] = $userModel
+            ->where('role', 'siswa')
+            ->findAll();
 
-        return $this->response
-            ->setContentType('application/pdf')
-            ->setHeader('Content-Disposition', 'attachment; filename="rekap_data_siswa.pdf"')
-            ->setBody($dompdf->output());
-    }
-
-    public function rekapGuruPdf()
-    {
-        $userModel = new \App\Models\UserModel();
-        $guru = $userModel->where('role', 'guru')->findAll();
-
-        $dompdf = new \Dompdf\Dompdf();
-        $html = view('admin/rekap_guru_pdf', ['guru' => $guru]);
-
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        $dompdf->stream('rekap-data-guru.pdf', ['Attachment' => false]);
-        exit();
+        return $this->generatePdf(
+            'admin/rekap_siswa_pdf',
+            $data,
+            'rekap-data-siswa.pdf'
+        );
     }
 
     public function tambahSiswa()
@@ -103,7 +106,8 @@ class Admin extends BaseController
 
         $db->table('users')->insert($data);
 
-        return redirect()->to(base_url('admin/siswa'))->with('success', 'Siswa berhasil ditambahkan.');
+        return redirect()->to(base_url('admin/siswa'))
+            ->with('success', 'Siswa berhasil ditambahkan.');
     }
 
     public function updateSiswa()
@@ -111,8 +115,7 @@ class Admin extends BaseController
         $redirect = $this->cekLoginAdmin();
         if ($redirect) return $redirect;
 
-        $id = $this->request->getPost('id');
-
+        $id          = $this->request->getPost('id');
         $emailPrefix = trim($this->request->getPost('email_prefix'));
 
         $data = [
@@ -150,9 +153,30 @@ class Admin extends BaseController
         if ($redirect) return $redirect;
 
         $userModel = new UserModel();
-        $data['guru'] = $userModel->where('role', 'guru')->findAll();
+
+        $data['guru'] = $userModel
+            ->where('role', 'guru')
+            ->findAll();
 
         return view('admin/guru', $data);
+    }
+
+    public function rekapGuruPdf()
+    {
+        $redirect = $this->cekLoginAdmin();
+        if ($redirect) return $redirect;
+
+        $userModel = new UserModel();
+
+        $data['guru'] = $userModel
+            ->where('role', 'guru')
+            ->findAll();
+
+        return $this->generatePdf(
+            'admin/rekap_guru_pdf',
+            $data,
+            'rekap-data-guru.pdf'
+        );
     }
 
     public function tambahGuru()
@@ -160,15 +184,10 @@ class Admin extends BaseController
         $redirect = $this->cekLoginAdmin();
         if ($redirect) return $redirect;
 
-        $nama        = $this->request->getPost('nama');
-        $emailPrefix = $this->request->getPost('email_prefix');
-        $email       = $emailPrefix . '@guru.com';
-        $password    = $this->request->getPost('password');
-
         $data = [
-            'nama'     => $nama,
-            'email'    => $email,
-            'password' => $password,
+            'nama'     => $this->request->getPost('nama'),
+            'email'    => $this->request->getPost('email_prefix') . '@guru.com',
+            'password' => $this->request->getPost('password'),
             'role'     => 'guru'
         ];
 
@@ -183,17 +202,15 @@ class Admin extends BaseController
         $redirect = $this->cekLoginAdmin();
         if ($redirect) return $redirect;
 
-        $id          = $this->request->getPost('id');
-        $nama        = $this->request->getPost('nama');
-        $emailPrefix = $this->request->getPost('email_prefix');
-        $email       = $emailPrefix . '@guru.com';
+        $id = $this->request->getPost('id');
 
         $data = [
-            'nama'  => $nama,
-            'email' => $email,
+            'nama'  => $this->request->getPost('nama'),
+            'email' => $this->request->getPost('email_prefix') . '@guru.com',
         ];
 
         $password = $this->request->getPost('password');
+
         if (!empty($password)) {
             $data['password'] = $password;
         }
@@ -224,15 +241,15 @@ class Admin extends BaseController
 
         $data['jadwal'] = $jadwalModel
             ->orderBy("
-            CASE
-                WHEN hari = 'Senin' THEN 1
-                WHEN hari = 'Selasa' THEN 2
-                WHEN hari = 'Rabu' THEN 3
-                WHEN hari = 'Kamis' THEN 4
-                WHEN hari = 'Jumat' THEN 5
-                ELSE 99
-            END
-        ", '', false)
+                CASE
+                    WHEN hari = 'Senin' THEN 1
+                    WHEN hari = 'Selasa' THEN 2
+                    WHEN hari = 'Rabu' THEN 3
+                    WHEN hari = 'Kamis' THEN 4
+                    WHEN hari = 'Jumat' THEN 5
+                    ELSE 99
+                END
+            ", '', false)
             ->orderBy('jam_mulai', 'ASC')
             ->findAll();
 
@@ -246,17 +263,16 @@ class Admin extends BaseController
 
         $jadwalModel = new JadwalModel();
 
-        $hari        = $this->request->getPost('hari');
-        $mapel       = $this->request->getPost('mapel');
-        $jamMulai    = $this->request->getPost('jam_mulai');
-        $jamSelesai  = $this->request->getPost('jam_selesai');
+        $hari       = $this->request->getPost('hari');
+        $mapel      = $this->request->getPost('mapel');
+        $jamMulai   = $this->request->getPost('jam_mulai');
+        $jamSelesai = $this->request->getPost('jam_selesai');
 
-        // VALIDASI: jam selesai harus lebih besar
         if ($jamSelesai <= $jamMulai) {
-            return redirect()->back()->with('error', 'Jam selesai harus lebih besar dari jam mulai.');
+            return redirect()->back()
+                ->with('error', 'Jam selesai harus lebih besar dari jam mulai.');
         }
 
-        // VALIDASI: bentrok jadwal
         $bentrok = $jadwalModel
             ->where('hari', $hari)
             ->groupStart()
@@ -266,17 +282,16 @@ class Admin extends BaseController
             ->first();
 
         if ($bentrok) {
-            return redirect()->back()->with('error', 'Jadwal bentrok dengan jadwal lain di hari yang sama.');
+            return redirect()->back()
+                ->with('error', 'Jadwal bentrok dengan jadwal lain di hari yang sama.');
         }
 
-        $data = [
+        $jadwalModel->insert([
             'hari'        => $hari,
             'mapel'       => $mapel,
             'jam_mulai'   => $jamMulai,
             'jam_selesai' => $jamSelesai,
-        ];
-
-        $jadwalModel->insert($data);
+        ]);
 
         return redirect()->to(base_url('admin/jadwal'));
     }
@@ -288,18 +303,17 @@ class Admin extends BaseController
 
         $jadwalModel = new JadwalModel();
 
-        $id          = $this->request->getPost('id');
-        $hari        = $this->request->getPost('hari');
-        $mapel       = $this->request->getPost('mapel');
-        $jamMulai    = $this->request->getPost('jam_mulai');
-        $jamSelesai  = $this->request->getPost('jam_selesai');
+        $id         = $this->request->getPost('id');
+        $hari       = $this->request->getPost('hari');
+        $mapel      = $this->request->getPost('mapel');
+        $jamMulai   = $this->request->getPost('jam_mulai');
+        $jamSelesai = $this->request->getPost('jam_selesai');
 
-        // VALIDASI: jam selesai harus lebih besar
         if ($jamSelesai <= $jamMulai) {
-            return redirect()->back()->with('error', 'Jam selesai harus lebih besar dari jam mulai.');
+            return redirect()->back()
+                ->with('error', 'Jam selesai harus lebih besar dari jam mulai.');
         }
 
-        // VALIDASI: bentrok (exclude dirinya sendiri)
         $bentrok = $jadwalModel
             ->where('hari', $hari)
             ->where('id !=', $id)
@@ -310,17 +324,16 @@ class Admin extends BaseController
             ->first();
 
         if ($bentrok) {
-            return redirect()->back()->with('error', 'Jadwal bentrok dengan jadwal lain di hari yang sama.');
+            return redirect()->back()
+                ->with('error', 'Jadwal bentrok dengan jadwal lain di hari yang sama.');
         }
 
-        $data = [
+        $jadwalModel->update($id, [
             'hari'        => $hari,
             'mapel'       => $mapel,
             'jam_mulai'   => $jamMulai,
             'jam_selesai' => $jamSelesai,
-        ];
-
-        $jadwalModel->update($id, $data);
+        ]);
 
         return redirect()->to(base_url('admin/jadwal'));
     }
@@ -332,6 +345,35 @@ class Admin extends BaseController
 
         $jadwalModel = new JadwalModel();
         $jadwalModel->delete($id);
+
         return redirect()->to(base_url('admin/jadwal'));
+    }
+
+    public function rekapJadwalPdf()
+    {
+        $redirect = $this->cekLoginAdmin();
+        if ($redirect) return $redirect;
+
+        $jadwalModel = new JadwalModel();
+
+        $data['jadwal'] = $jadwalModel
+            ->orderBy("
+                CASE
+                    WHEN hari = 'Senin' THEN 1
+                    WHEN hari = 'Selasa' THEN 2
+                    WHEN hari = 'Rabu' THEN 3
+                    WHEN hari = 'Kamis' THEN 4
+                    WHEN hari = 'Jumat' THEN 5
+                    ELSE 99
+                END
+            ", '', false)
+            ->orderBy('jam_mulai', 'ASC')
+            ->findAll();
+
+        return $this->generatePdf(
+            'admin/rekap_jadwal_pdf',
+            $data,
+            'rekap-jadwal.pdf'
+        );
     }
 }

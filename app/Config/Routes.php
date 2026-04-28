@@ -46,6 +46,7 @@ $routes->group('admin', function ($routes) {
     $routes->post('jadwal/tambah', 'Admin::tambahJadwal');
     $routes->post('jadwal/update', 'Admin::updateJadwal');
     $routes->get('jadwal/hapus/(:num)', 'Admin::hapusJadwal/$1');
+    $routes->get('jadwal/rekap-pdf', 'Admin::rekapJadwalPdf');
 });
 
 
