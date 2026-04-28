@@ -65,6 +65,14 @@
                 margin-bottom: 85px !important;
             }
         }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
     </style>
 </head>
 
@@ -146,23 +154,47 @@
                                 <td><?= esc($j['jam_mulai']) ?></td>
                                 <td><?= esc($j['jam_selesai']) ?></td>
                                 <td>
-                                    <button class="btn btn-warning btn-sm"
-                                        onclick="editJadwal(
-                                            '<?= $j['id'] ?>',
-                                            '<?= $j['hari'] ?>',
-                                            '<?= $j['mapel'] ?>',
-                                            '<?= $j['jam_mulai'] ?>',
-                                            '<?= $j['jam_selesai'] ?>'
-                                        )"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalEdit">
-                                        Edit
-                                    </button>
-                                    <a href="<?= base_url('admin/jadwal/hapus/' . $j['id']) ?>"
-                                        class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Yakin ingin menghapus?')">
-                                        Hapus
-                                    </a>
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm border"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="bi bi-three-dots"></i>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+                                            <li>
+                                                <button class="dropdown-item"
+                                                    onclick="editJadwal(
+                                                        '<?= $j['id'] ?>',
+                                                        '<?= $j['hari'] ?>',
+                                                        '<?= $j['mapel'] ?>',
+                                                        '<?= $j['jam_mulai'] ?>',
+                                                        '<?= $j['jam_selesai'] ?>'
+                                                    )"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalEdit">
+
+                                                    <i class="bi bi-pencil-square me-2 text-warning"></i>
+                                                    Edit
+                                                </button>
+                                            </li>
+
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+
+                                            <li>
+                                                <a href="<?= base_url('admin/jadwal/hapus/' . $j['id']) ?>"
+                                                    class="dropdown-item text-danger"
+                                                    onclick="return confirm('Yakin ingin menghapus jadwal ini?')">
+
+                                                    <i class="bi bi-trash me-2"></i>
+                                                    Hapus
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

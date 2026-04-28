@@ -69,6 +69,26 @@
                 margin-bottom: 85px !important;
             }
         }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .table-responsive {
+            overflow: visible !important;
+        }
+
+        td:last-child {
+            overflow: visible !important;
+        }
+
+        .dropdown-menu {
+            min-width: 140px;
+        }
     </style>
 </head>
 
@@ -126,7 +146,7 @@
                             <th>Nama</th>
                             <th>NIS</th>
                             <th>Email</th>
-                            <th>Aksi</th>
+                            <th class="text-center" style="width:90px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -137,24 +157,49 @@
                                 <td><?= esc($row['nama']) ?></td>
                                 <td><?= esc($row['nis']) ?></td>
                                 <td><?= esc($row['email']) ?></td>
-                                <td>
-                                    <button class="btn btn-sm btn-warning"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalEdit"
-                                        onclick="editSiswa(
-            '<?= $row['id'] ?>',
-            '<?= esc($row['nama'], 'attr') ?>',
-            '<?= esc($row['nis'], 'attr') ?>',
-            '<?= explode('@', $row['email'])[0] ?>'
-        )">
-                                        Edit
-                                    </button>
+                                <td class="text-center position-relative">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm border px-2"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                            <i class="bi bi-three-dots"></i>
+                                        </button>
 
-                                    <a href="<?= base_url('admin/siswa/hapus/' . $row['id']) ?>"
-                                        class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Hapus siswa ini?')">
-                                        Hapus
-                                    </a>
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+
+                                            <li>
+                                                <button class="dropdown-item"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalEdit"
+                                                    onclick="editSiswa(
+                                                        '<?= $row['id'] ?>',
+                                                        '<?= esc($row['nama'], 'attr') ?>',
+                                                        '<?= esc($row['nis'], 'attr') ?>',
+                                                        '<?= explode('@', $row['email'])[0] ?>'
+                                                    )">
+
+                                                    <i class="bi bi-pencil-square me-2 text-warning"></i>
+                                                    Edit
+                                                </button>
+                                            </li>
+
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+
+                                            <li>
+                                                <a href="<?= base_url('admin/siswa/hapus/' . $row['id']) ?>"
+                                                    class="dropdown-item text-danger"
+                                                    onclick="return confirm('Hapus siswa ini?')">
+
+                                                    <i class="bi bi-trash me-2"></i>
+                                                    Hapus
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

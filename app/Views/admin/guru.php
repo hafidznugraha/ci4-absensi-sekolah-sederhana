@@ -73,6 +73,34 @@
                 margin-bottom: 32px;
             }
         }
+
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        .table td {
+            vertical-align: middle;
+        }
+
+        .table-wrapper {
+            overflow: visible;
+        }
+
+        .table td:last-child {
+            overflow: visible;
+            position: relative;
+        }
+
+        .dropdown-menu {
+            min-width: 140px;
+            z-index: 9999;
+        }
+
+        @media (max-width: 768px) {
+            .table-wrapper {
+                overflow-x: auto;
+            }
+        }
     </style>
 </head>
 
@@ -122,14 +150,14 @@
             </div>
         </div>
         <div class="card">
-            <div class="table-responsive">
+            <div class="table-wrapper">
                 <table class="table table-hover mb-0">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
                             <th>Email</th>
-                            <th>Aksi</th>
+                            <th class="text-center" style="width:90px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,18 +167,49 @@
                                 <td><?= $no++ ?></td>
                                 <td><?= esc($row['nama']) ?></td>
                                 <td><?= esc($row['email']) ?></td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modalEdit"
-                                        onclick="editGuru('<?= $row['id'] ?>', '<?= esc($row['nama'], 'attr') ?>', '<?= explode('@', $row['email'])[0] ?>')">
-                                        Edit
-                                    </button>
-                                    <a href="<?= base_url('admin/guru/hapus/' . $row['id']) ?>"
-                                        class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Hapus guru ini?')">
-                                        Hapus
-                                    </a>
+                                <td class="text-center position-relative">
+                                    <div class="dropdown">
+                                        <button class="btn btn-light btn-sm border px-2 py-1"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+
+                                            <i class="bi bi-three-dots"></i>
+                                        </button>
+
+                                        <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-1">
+
+                                            <li>
+                                                <button class="dropdown-item"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalEdit"
+                                                    onclick="editGuru(
+                                                        '<?= $row['id'] ?>',
+                                                        '<?= esc($row['nama'], 'attr') ?>',
+                                                        '<?= explode('@', $row['email'])[0] ?>'
+                                                    )">
+
+                                                    <i class="bi bi-pencil-square me-2 text-warning"></i>
+                                                    Edit
+                                                </button>
+                                            </li>
+
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+
+                                            <li>
+                                                <a href="<?= base_url('admin/guru/hapus/' . $row['id']) ?>"
+                                                    class="dropdown-item text-danger"
+                                                    onclick="return confirm('Hapus guru ini?')">
+
+                                                    <i class="bi bi-trash me-2"></i>
+                                                    Hapus
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach ?>
